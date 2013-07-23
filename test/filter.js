@@ -40,3 +40,47 @@ test('can filter to include only directories', function(t) {
     })
   );
 });
+
+test('can filter to include only directories (short form)', function(t) {
+  var dirs = fs.readdirSync(__dirname);
+
+  dirs = dirs
+    .map(path.join.bind(null, __dirname))
+    .map(fs.statSync)
+    .filter(function(stats) {
+      return stats.isDirectory();
+    });
+
+  t.plan(2);
+
+  pull(
+    fpath.entries(__dirname),
+    fpath.filter('isDirectory'),
+    pull.collect(function(err, entries) {
+      t.error(err);
+      t.equal(entries.length, dirs.length);
+    })
+  );
+});
+
+test('can filter to include only files (short form)', function(t) {
+  var files = fs.readdirSync(__dirname);
+
+  files = files
+    .map(path.join.bind(null, __dirname))
+    .map(fs.statSync)
+    .filter(function(stats) {
+      return stats.isFile();
+    });
+
+  t.plan(2);
+
+  pull(
+    fpath.entries(__dirname),
+    fpath.filter('isFile'),
+    pull.collect(function(err, entries) {
+      t.error(err);
+      t.equal(entries.length, files.length);
+    })
+  );
+});

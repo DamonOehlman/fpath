@@ -7,6 +7,7 @@
 **/
 
 var fs = require('fs');
+var Stats = fs.Stats;
 var path = require('path');
 var pull = require('pull-stream');
 
@@ -61,11 +62,11 @@ exports.entries = pull.Source(function(targetPath, opts) {
 
   The filter function provides a through stream that will only pass through
   those files that pass a truth test.  As it's usually handy to have more
-  information on the file than just it's name, the `fs.stat` function is called
-  on each file before being passed to the test function.
+  information on the file than just it's name, the `fs.stat` function is 
+  called on each file before being passed to the test function.
 
-  The following example demonstrates how you could only pass through directories
-  from an entries source stream:
+  The following example demonstrates how you could only pass through
+  directories from an entries source stream:
 
   ```js
   pull(
@@ -75,6 +76,20 @@ exports.entries = pull.Source(function(targetPath, opts) {
     }),
     pull.collect(function(err, items) {
       // items will contain the directory names
+    })
+  );
+  ```
+
+  Additionally, a filter shortcut is available if you just want to call one
+  of the many "is*" methods available on an
+  [fs.Stats](http://nodejs.org/api/fs.html#fs_class_fs_stats) object:
+
+  ```js
+  pull(
+    fpath.entries(__dirname),
+    fpath.filter('isDirectory'),
+    pull.collect(function(err, items) {
+      // items will contain directory names only
     })
   );
   ```
@@ -93,6 +108,27 @@ exports.entries = pull.Source(function(targetPath, opts) {
   ```
 **/
 exports.filter = pull.Through(function(read, test) {
+  var typeTest;
+
+  // if the test is a string and matches an is expression
+  // convert into something useful
+  if (typeof test == 'string' || (test instanceof String)) {
+    // get the type test method
+    typeTest = Stats.prototype[test];
+
+    // if the test method is not a valid check on the stats prototype
+    // reset the test to null
+    if (typeof typeTest != 'function') {
+      test = null;
+    }
+    else {
+      test = function(name, stats) {
+        return typeTest.call(stats);
+      };
+    }
+  }
+
+  // provide a default filter if none provided
   test = test || function() {
     return false;
   };

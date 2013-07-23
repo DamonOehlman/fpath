@@ -22,11 +22,11 @@ pull(
 
 The filter function provides a through stream that will only pass through
 those files that pass a truth test.  As it's usually handy to have more
-information on the file than just it's name, the `fs.stat` function is called
-on each file before being passed to the test function.
+information on the file than just it's name, the `fs.stat` function is 
+called on each file before being passed to the test function.
 
-The following example demonstrates how you could only pass through directories
-from an entries source stream:
+The following example demonstrates how you could only pass through
+directories from an entries source stream:
 
 ```js
 pull(
@@ -36,6 +36,20 @@ pull(
   }),
   pull.collect(function(err, items) {
     // items will contain the directory names
+  })
+);
+```
+
+Additionally, a filter shortcut is available if you just want to call one
+of the many "is*" methods available on an
+[fs.Stats](http://nodejs.org/api/fs.html#fs_class_fs_stats) object:
+
+```js
+pull(
+  fpath.entries(__dirname),
+  fpath.filter('isDirectory'),
+  pull.collect(function(err, items) {
+    // items will contain directory names only
   })
 );
 ```
