@@ -1,0 +1,23 @@
+{
+  "name": "fpath",
+  "version": "0.0.0",
+  "description": "Pull-stream file and path helpers",
+  "main": "index.js",
+  "repository": "",
+  "keywords": [
+    "pull-stream",
+    "fs",
+    "path"
+  ],
+  "author": "Damon Oehlman <damon.oehlman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pull-stream": "~2.20.0"
+  },
+  "devDependencies": {
+    "tape": "~1.0.4"
+  },
+  "scripts": {
+    "test": "node test/all"
+  }
+}
