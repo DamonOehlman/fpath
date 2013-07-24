@@ -107,7 +107,8 @@ exports.entries = pull.Source(function(targetPath, opts) {
   );
   ```
 **/
-exports.filter = pull.Through(function(read, test) {
+exports.filter = function(test) {
+  var pipeline;
   var typeTest;
 
   // if the test is a string and matches an is expression
@@ -133,19 +134,15 @@ exports.filter = pull.Through(function(read, test) {
     return false;
   };
 
-  return function next(end, cb) {
-    read(end, function(end, data) {
-      // if ended, abort
-      if (end) return cb(end, data);
+  pipeline = pull.paraMap(function(item, callback) {
+    fs.stat(item, function(err, stats) {
+      callback(err, { filename: item, stats: stats })
+    })
+  });
 
-      // otherwise, stat the file
-      fs.stat(data, function(err, stats) {
-        if (err || !test(data, stats)) {
-          return next(end, cb);
-        }
+  pipeline = pipeline.pipe(pull.filter(function(item) {
+    return test(item.filename, item.stats);
+  }));
 
-        cb(end, data);
-      });
-    });
-  };
-});
+  return pipeline;
+};
