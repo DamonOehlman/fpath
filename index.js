@@ -134,14 +134,21 @@ exports.filter = function(test) {
     return false;
   };
 
+  // stat files and inject the stats into the result feed
   pipeline = pull.paraMap(function(item, callback) {
     fs.stat(item, function(err, stats) {
       callback(err, { filename: item, stats: stats })
     })
   });
 
+  // filter out files that don't match
   pipeline = pipeline.pipe(pull.filter(function(item) {
     return test(item.filename, item.stats);
+  }));
+
+  // return the data stream back to its original form (filename only)
+  pipeline = pipeline.pipe(pull.map(function(data) {
+    return data.filename;
   }));
 
   return pipeline;

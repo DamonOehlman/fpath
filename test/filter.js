@@ -84,3 +84,30 @@ test('can filter to include only files (short form)', function(t) {
     })
   );
 });
+
+test('filtered results a filenames only (not objects)', function(t) {
+  var files = fs.readdirSync(__dirname);
+  var filenames = [].concat(files).map(path.join.bind(null, __dirname));
+
+  files = files
+    .map(path.join.bind(null, __dirname))
+    .map(fs.statSync)
+    .filter(function(stats) {
+      return stats.isFile();
+    });
+
+  t.plan(2 + files.length);
+
+  pull(
+    fpath.entries(__dirname),
+    fpath.filter('isFile'),
+    pull.collect(function(err, entries) {
+      t.error(err);
+      t.equal(entries.length, files.length);
+
+      entries.forEach(function(entry) {
+        t.ok(filenames.indexOf(entry) >= 0, 'Found entry in matching file list');
+      });
+    })
+  );
+});
