@@ -1,6 +1,6 @@
 {
   "name": "fpath",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Pull-stream file and path helpers",
   "main": "index.js",
   "repository": "https://github.com/DamonOehlman/fpath.git",
