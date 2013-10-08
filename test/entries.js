@@ -19,7 +19,9 @@ test('can find files in a directory', function(t) {
 });
 
 test('finds the full path names of the files', function(t) {
-  var expectedFiles = fs.readdirSync(__dirname).map(path.join.bind(null, __dirname));
+  var expectedFiles = fs.readdirSync(__dirname).map(function(childPath) {
+    return path.join(__dirname, childPath);
+  });
 
   t.plan(expectedFiles.length + 1);
 

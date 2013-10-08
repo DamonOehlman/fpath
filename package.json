@@ -3,7 +3,7 @@
   "version": "0.1.3",
   "description": "Pull-stream file and path helpers",
   "main": "index.js",
-  "repository": "https://github.com/DamonOehlman/fpath.git",
+  "repository": "https://bitbucket.org/DamonOehlman/fpath.git",
   "keywords": [
     "pull-stream",
     "fs",
@@ -19,7 +19,7 @@
     "emu": "0.0.2"
   },
   "scripts": {
-    "gendocs": "$(npm bin)/emu < index.js > README.md",
-    "test": "node test/all"
+    "gendocs": "gendocs > README.md",
+    "test": "node test/all.js"
   }
 }
