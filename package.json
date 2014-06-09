@@ -12,14 +12,14 @@
   "author": "Damon Oehlman <damon.oehlman@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "pull-stream": "~2.20.0"
+    "pull-core": "^1"
   },
   "devDependencies": {
-    "tape": "~1.0.4",
-    "emu": "0.0.2"
+    "pull-stream": "^2",
+    "tape": "^2"
   },
   "scripts": {
-    "gendocs": "$(npm bin)/emu < index.js > README.md",
-    "test": "node test/all"
+    "gendocs": "gendocs > README.md",
+    "test": "node test/all.js"
   }
 }
