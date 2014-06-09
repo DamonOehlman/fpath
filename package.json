@@ -3,7 +3,6 @@
   "version": "0.1.3",
   "description": "Pull-stream file and path helpers",
   "main": "index.js",
-  "repository": "https://github.com/DamonOehlman/fpath.git",
   "keywords": [
     "pull-stream",
     "fs",
@@ -21,5 +20,17 @@
   "scripts": {
     "gendocs": "gendocs > README.md",
     "test": "node test/all.js"
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DamonOehlman/fpath.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DamonOehlman/fpath/issues"
+  },
+  "homepage": "https://github.com/DamonOehlman/fpath"
 }
