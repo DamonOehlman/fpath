@@ -7,7 +7,7 @@ the file system.
 
 [![NPM](https://nodei.co/npm/fpath.png)](https://nodei.co/npm/fpath/)
 
-[![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)](https://github.com/badges/stability-badges) 
+[![Build Status](https://img.shields.io/travis/DamonOehlman/fpath.svg?branch=master)](https://travis-ci.org/DamonOehlman/fpath) [![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)](https://github.com/badges/stability-badges) 
 
 ## entries(targetPath, opts)
 
