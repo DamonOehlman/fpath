@@ -21,7 +21,9 @@ test('can filter to include only directories', function(t) {
   var dirs = fs.readdirSync(__dirname);
 
   dirs = dirs
-    .map(path.join.bind(null, __dirname))
+    .map(function(name) {
+      return path.join(__dirname, name);
+    })
     .map(fs.statSync)
     .filter(function(stats) {
       return stats.isDirectory();
@@ -45,7 +47,9 @@ test('can filter to include only directories (short form)', function(t) {
   var dirs = fs.readdirSync(__dirname);
 
   dirs = dirs
-    .map(path.join.bind(null, __dirname))
+    .map(function(name) {
+      return path.join(__dirname, name);
+    })
     .map(fs.statSync)
     .filter(function(stats) {
       return stats.isDirectory();
@@ -67,7 +71,9 @@ test('can filter to include only files (short form)', function(t) {
   var files = fs.readdirSync(__dirname);
 
   files = files
-    .map(path.join.bind(null, __dirname))
+    .map(function(name) {
+      return path.join(__dirname, name)
+    })
     .map(fs.statSync)
     .filter(function(stats) {
       return stats.isFile();
@@ -87,10 +93,14 @@ test('can filter to include only files (short form)', function(t) {
 
 test('filtered results a filenames only (not objects)', function(t) {
   var files = fs.readdirSync(__dirname);
-  var filenames = [].concat(files).map(path.join.bind(null, __dirname));
+  var filenames = [].concat(files).map(function(name) {
+    return path.join(__dirname, name);
+  });
 
   files = files
-    .map(path.join.bind(null, __dirname))
+    .map(function(name) {
+      return path.join(__dirname, name);
+    })
     .map(fs.statSync)
     .filter(function(stats) {
       return stats.isFile();
