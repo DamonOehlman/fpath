@@ -1,6 +1,6 @@
 {
   "name": "fpath",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Pull-stream file and path helpers",
   "main": "index.js",
   "keywords": [
